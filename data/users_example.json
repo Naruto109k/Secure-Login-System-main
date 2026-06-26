@@ -1,0 +1,28 @@
+{
+    "alice": {
+        "username": "alice",
+        "salt": "a3f1b9c8e2d4076581f3a9b2c4d6e8f0a1b3c5d7e9f0a2b4c6d8e0f1a3b5c7d9",
+        "password_hash": "e7c94b1d3f5a728096e4b2d8f0a1c3e5b7d9f1a3c5e7b9d1f3a5c7e9b1d3f5a7",
+        "role": "user",
+        "failed_login_count": 0,
+        "locked_until": null,
+        "session_token": null,
+        "session_created_at": null,
+        "session_expires_at": null,
+        "security_question": "What is your pet's name?",
+        "security_answer_hash": "f1a3b5c7d9e1f3a5b7c9d1e3f5a7b9c1d3e5f7a9b1c3d5e7f9a1b3c5d7e9f1a3"
+    },
+    "bob_admin": {
+        "username": "bob_admin",
+        "salt": "c5d7e9f1a3b5c7d9e1f3a5b7c9d1e3f5a7b9c1d3e5f7a9b1c3d5e7f9a1b3c5d7",
+        "password_hash": "b9c1d3e5f7a9b1c3d5e7f9a1b3c5d7e9f1a3b5c7d9e1f3a5b7c9d1e3f5a7b9c1",
+        "role": "admin",
+        "failed_login_count": 0,
+        "locked_until": null,
+        "session_token": null,
+        "session_created_at": null,
+        "session_expires_at": null,
+        "security_question": "What city were you born in?",
+        "security_answer_hash": "d3e5f7a9b1c3d5e7f9a1b3c5d7e9f1a3b5c7d9e1f3a5b7c9d1e3f5a7b9c1d3e5"
+    }
+}

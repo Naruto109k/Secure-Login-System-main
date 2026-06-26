@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Auth System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container glass">
+        <header>
+            <h1>SecureAuth.</h1>
+            <nav id="nav-menu" class="hidden">
+                <button class="nav-btn" onclick="showView('dashboard-view')">Dashboard</button>
+                <button class="nav-btn hidden" id="nav-admin" onclick="showView('admin-view')">Admin Panel</button>
+                <button class="nav-btn btn-outline" onclick="logout()">Logout</button>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <!-- Alert Box -->
+            <div id="alert-box" class="alert hidden"></div>
+
+            <!-- Login View -->
+            <section id="login-view" class="view active">
+                <h2>Welcome Back</h2>
+                <p class="subtitle">Enter your credentials to continue</p>
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <input type="text" id="login-username" required placeholder=" ">
+                        <label for="login-username">Username</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="login-password" required placeholder=" ">
+                        <label for="login-password">Password</label>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                <div class="actions">
+                    <button class="text-btn" onclick="showView('register-view')">Create an account</button>
+                    <button class="text-btn" onclick="showView('reset-init-view')">Forgot password?</button>
+                </div>
+            </section>
+
+            <!-- Register View -->
+            <section id="register-view" class="view">
+                <h2>Create Account</h2>
+                <p class="subtitle">Join SecureAuth today</p>
+                <form id="register-form" onsubmit="handleRegister(event)">
+                    <div class="input-group">
+                        <input type="text" id="reg-username" required placeholder=" ">
+                        <label for="reg-username">Username</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="reg-password" required placeholder=" ">
+                        <label for="reg-password">Password</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="reg-confirm" required placeholder=" ">
+                        <label for="reg-confirm">Confirm Password</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="reg-question" required placeholder=" ">
+                        <label for="reg-question">Security Question</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="reg-answer" required placeholder=" ">
+                        <label for="reg-answer">Security Answer</label>
+                    </div>
+                    <div class="input-group select-group">
+                        <select id="reg-role">
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                        <label for="reg-role">Role</label>
+                    </div>
+                    <button type="submit" class="btn-primary">Register</button>
+                </form>
+                <div class="actions">
+                    <button class="text-btn" onclick="showView('login-view')">Already have an account? Login</button>
+                </div>
+            </section>
+
+            <!-- Reset Init View -->
+            <section id="reset-init-view" class="view">
+                <h2>Reset Password</h2>
+                <p class="subtitle">Enter your username to continue</p>
+                <form id="reset-init-form" onsubmit="handleResetInit(event)">
+                    <div class="input-group">
+                        <input type="text" id="reset-username" required placeholder=" ">
+                        <label for="reset-username">Username</label>
+                    </div>
+                    <button type="submit" class="btn-primary">Continue</button>
+                </form>
+                <div class="actions">
+                    <button class="text-btn" onclick="showView('login-view')">Back to Login</button>
+                </div>
+            </section>
+
+            <!-- Reset Complete View -->
+            <section id="reset-complete-view" class="view">
+                <h2>Security Question</h2>
+                <p class="subtitle" id="reset-question-display"></p>
+                <form id="reset-complete-form" onsubmit="handleResetComplete(event)">
+                    <div class="input-group">
+                        <input type="password" id="reset-answer" required placeholder=" ">
+                        <label for="reset-answer">Your Answer</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="reset-new-pass" required placeholder=" ">
+                        <label for="reset-new-pass">New Password</label>
+                    </div>
+                    <button type="submit" class="btn-primary">Reset Password</button>
+                </form>
+            </section>
+
+            <!-- Dashboard View -->
+            <section id="dashboard-view" class="view">
+                <h2>Dashboard</h2>
+                <div class="profile-card glass-panel">
+                    <h3>Profile</h3>
+                    <div class="stats-grid" id="profile-stats">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+                <div class="session-card glass-panel">
+                    <h3>Session Info</h3>
+                    <div class="stats-grid" id="session-stats">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin View -->
+            <section id="admin-view" class="view">
+                <h2>Admin Panel</h2>
+                <div class="admin-controls">
+                    <button class="btn-outline" onclick="loadAdminUsers()">Refresh Users</button>
+                </div>
+                <div class="table-container glass-panel">
+                    <table id="users-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Fails</th>
+                                <th>Locked</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Admin Reset Modal (Inline) -->
+                <div id="admin-reset-panel" class="glass-panel hidden mt-4">
+                    <h3>Force Reset Password</h3>
+                    <form onsubmit="handleAdminReset(event)" class="inline-form">
+                        <input type="hidden" id="admin-reset-target">
+                        <div class="input-group">
+                            <input type="password" id="admin-reset-pass" required placeholder=" ">
+                            <label for="admin-reset-pass">New Password for <span id="admin-reset-target-display"></span></label>
+                        </div>
+                        <button type="submit" class="btn-primary btn-small">Reset</button>
+                        <button type="button" class="btn-outline btn-small" onclick="document.getElementById('admin-reset-panel').classList.add('hidden')">Cancel</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
